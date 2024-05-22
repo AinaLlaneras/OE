@@ -1,12 +1,11 @@
 reset;
 
-model E1A2.mod;
+model E1A33.mod;
 data  data.dat;
-option solver gurobi;
+option solver cbc;
 
 solve;
 
-display CostTotal;
 display PG;
 display P;
 display u;

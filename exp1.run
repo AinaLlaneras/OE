@@ -34,6 +34,9 @@ print("potencia") > "Apartat1_41.txt";
 printf {i in 1..card(H)} "%12.4f\n", pot2[i] > "Apartat1_41.txt";
 close "Apartat1_41.txt";
 
+print("pmax pmin rup rdown") > "Apartat_42.txt";
+printf {i in G} "%12.2f%4i%4i%4i\n", pgmax[i], pgmin[i], ru[i], rd[i] > "Apartat_42.txt";
+close "Apartat_42.txt";
 #v
 print("pgmax pgmin ru rd") > "Apartat1_5_params.txt";
 printf {i in G} "%12.2f%12.2f%12.2f%12.f\n", pgmax[i], pgmin[i], ru[i], rd[i] > "Apartat1_5_params.txt";

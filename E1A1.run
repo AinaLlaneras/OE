@@ -1,6 +1,6 @@
 reset;
 
-model Apartat1.mod;
+model E1A1.mod;
 data  data.dat;
 option solver gurobi;
 
@@ -18,12 +18,13 @@ display Th;
 # iv
 
 param pot{L};
-
+# hem pres com a definicio de sobrecarrega l'arc pel que hi passa mes potencia, llavors fem la suma de potencies que passa per cada arc independentment del sentit
 for{(l,k) in L}{
 	let pot[l,k] := sum{t in H} abs(P[l,k,t]);
 };
-display pot;
+display pot; 
 
+# l'arc mes sobrecarregat amb aquesta definicio es el 4,7, imprimim la potencia al llarg del temps 
 
 param pot2{1..card{H}};
 for{i in 1..card{H}}{
