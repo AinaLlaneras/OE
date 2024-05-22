@@ -1,0 +1,10 @@
+reset;
+
+model Apartat3.mod;
+data  data.dat;
+option solver gurobi;
+
+solve;
+
+display CostTotal;
+

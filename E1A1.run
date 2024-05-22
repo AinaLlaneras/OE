@@ -1,0 +1,32 @@
+reset;
+
+model Apartat1.mod;
+data  data.dat;
+option solver gurobi;
+
+solve;
+
+# i
+
+display CostTotal;
+display PG;
+display P;
+display u;
+display vud;
+display Th;
+
+# iv
+
+param pot{L};
+
+for{(l,k) in L}{
+	let pot[l,k] := sum{t in H} abs(P[l,k,t]);
+};
+display pot;
+
+
+param pot2{1..card{H}};
+for{i in 1..card{H}}{
+	let pot2[i] := P[4,7,i];
+};
+display pot2;

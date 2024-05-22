@@ -1,0 +1,13 @@
+reset;
+
+model Apartat32.mod;
+data  data.dat;
+option solver cbc;
+
+solve;
+
+display PG;
+display P;
+display u;
+display v;
+display w;

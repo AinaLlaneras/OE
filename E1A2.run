@@ -1,0 +1,14 @@
+reset;
+
+model Apartat2.mod;
+data  data.dat;
+option solver gurobi;
+
+solve;
+
+display CostTotal;
+display PG;
+display P;
+display u;
+display v;
+display w;
