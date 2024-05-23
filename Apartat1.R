@@ -78,6 +78,9 @@ potencia_hores <- pivot_longer(data = pg2, cols = 1:4, names_to = "generador", v
 prova <- left_join(marges[,3:5], potencia_hores, by="generador")
 prova[prova$rdown < 0, 2] <- 0
 
+prova[,"rdown"] <- prova$mgw-prova$rdown
+prova[,"rup"] <- prova$mgw+prova$rup
+
 ggplot(data = prova, aes(x = T, y = mgw)) + 
   geom_ribbon(aes(ymin = rdown, ymax = rup), fill = "grey80", alpha = 0.5) +
   geom_line() +
@@ -88,8 +91,4 @@ ggplot(data = prova, aes(x = T, y = mgw)) +
   geom_hline(data = marges, aes(yintercept = pmin), color = "blue", linetype = "dashed") 
 
 ## f) creus que pot tenir setnit incrementar la capacitat d'alguna unitat generadora? si es així, quina inversió econòmica estaries disposat a fer?
-
-max_min_data <- potencia_hores %>%
-  group_by(generador) %>%
-  summarize(mgw_max = max(mgw), mgw_min = min(mgw))
 
