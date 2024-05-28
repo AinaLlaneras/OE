@@ -22,14 +22,11 @@ df3 <- read.table("Apartat1_3.txt", header = TRUE)
 df3$T <- T
 df32 <- pivot_longer(df3, cols = c(PG_NRC3, PG_NRC1), names_to = "Generadors", values_to = "Potencia")
 
-graf1 <- ggplot(data = df32, aes(x = T, y = Potencia, group = Generadors)) 
-
-graf1 +
-  geom_line(aes(color=factor(Generadors)),linewidth=1.1) +
-  labs(title = "Perfil de potència",
-       x = "T",
-       y = "MGW",
-       color = "Generador") 
+df32$Tprev <- df32$T -1
+ggplot(data = df32) + 
+  geom_rect(aes(xmin = Tprev, xmax = T, ymin = 0, ymax = Potencia, fill = Generadors, color = Generadors), 
+            alpha = 0.7) +
+  geom_line(aes(x = T, y = Potencia,color = factor(Generadors)), linewidth=1.1)
 
 ## d) quin és l'arc més sobrecarregat? gràfic del seu perfil de potència al llarg del temps 
 
@@ -58,12 +55,17 @@ pot[which.max(pot[,3]),]
 
 arc <- read.table("Apartat1_41.txt", header = TRUE)
 arc$T <- T
+arc$Tprev <- T-1
 
 ggplot(data = arc, aes(x = T, y = potencia))+ 
   geom_line(linewidth=1.1) +
   labs(title = "Perfil de potència arc (4,7)",
        x = "T",
        y = "MGW") 
+
+ggplot(data = arc) + 
+  geom_rect(aes(xmin = Tprev, xmax = T, ymin = 0, ymax = potencia)) +
+  geom_line(aes(x = T, y = potencia))
 
 ## e) marge de potència disponible té el sistema a cada període per absorbir eventuals desajustos d oferta i o demanda
 marges <- read.table("Apartat_42.txt", header = TRUE)
@@ -90,5 +92,5 @@ ggplot(data = prova, aes(x = T, y = mgw)) +
   geom_hline(data = marges, aes(yintercept = pmax), color = "red", linetype = "dashed") +
   geom_hline(data = marges, aes(yintercept = pmin), color = "blue", linetype = "dashed") 
 
-## f) creus que pot tenir setnit incrementar la capacitat d'alguna unitat generadora? si es així, quina inversió econòmica estaries disposat a fer?
+## f) creus que pot tenir setnit incrementar la capacitat d'alguna unitat generadora? si es així, quina inversió econòmica estaries disposat a fer? 
 
