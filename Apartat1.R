@@ -90,7 +90,7 @@ ggplot(data = prova, aes(x = T, y = mgw)) +
   labs(x="T", 
        y="MGW")+
   geom_hline(data = marges, aes(yintercept = pmax), color = "red", linetype = "dashed") +
-  geom_hline(data = marges, aes(yintercept = pmin), color = "blue", linetype = "dashed") 
+  geom_hline(data = marges, aes(yintercept = pmin), color = "blue", linetype = "dashed")
 
 ## f) creus que pot tenir setnit incrementar la capacitat d'alguna unitat generadora? si es així, quina inversió econòmica estaries disposat a fer? 
 

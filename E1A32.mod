@@ -47,7 +47,8 @@ s.t. FRC {i in D, t in H}: maxalpha >= alpha[i,t];
 # Nodal Power Flow Equations
 s.t. NPFE { k in B, t in H } :
 	sum{(k,l) in L} P[k,l,t] - sum{(l,k) in L} P[l,k,t] = 
-	(sum{i in GB[k]: card(GB[k])>0} PG[i,t]) - (sum{j in DB[k]: card(DB[k])>0} (1-alpha[j,t])*(1.1*pd[j,t])); # nova carrega del sistema 
+	(sum{i in GB[k]: card(GB[k])>0} PG[i,t]) - 
+	(sum{j in DB[k]: card(DB[k])>0} (1-alpha[j,t])*(1.1*pd[j,t])); # nova carrega del sistema 
 
 # Linear power flow equations 
 subject to LPFE {(k,l) in L, t in H } : 
