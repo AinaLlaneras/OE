@@ -1,0 +1,35 @@
+param P12{t in H} := P[1,2,t].val;
+param P15{t in H} := P[1,5,t].val;
+
+param P23{t in H} := P[2,3,t].val;
+param P24{t in H} := P[2,4,t].val;
+param P25{t in H} := P[2,5,t].val;
+
+param P34{t in H} := P[3,4,t].val;
+
+param P45{t in H} := P[4,5,t].val;
+param P47{t in H} := P[4,7,t].val;
+param P49{t in H} := P[4,9,t].val;
+
+param P56{t in H} := P[5,6,t].val;
+
+param P611{t in H} := P[6,11,t].val;
+param P612{t in H} := P[6,12,t].val;
+param P613{t in H} := P[6,13,t].val;
+
+param P78{t in H} := P[7,8,t].val;
+param P79{t in H} := P[7,9,t].val;
+
+param P910{t in H} := P[9,10,t].val;
+param P914{t in H} := P[9,14,t].val;
+
+param P1011{t in H} := P[10,11,t].val;
+
+param P1213{t in H} := P[12,13,t].val;
+
+param P1314{t in H} := P[13,14,t].val;
+
+print ("P12 P15 P23 P24 P25 P34 P45 P47 P49 P56 P611 P612 P613 P78 P79 P910 P914 P1011 P1213 P1314") > "P.txt";
+printf {t in H} "%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f\n", P12[t], P15[t], P23[t], P24[t], P25[t], P34[t], P45[t], P47[t], P49[t], P56[t], P611[t], P612[t], P613[t], P78[t], P79[t], P910[t], P914[t], P1011[t], P1213[t], P1314[t] > "P.txt";
+close "P.txt";
+
