@@ -36,9 +36,9 @@ printf {t in H} "%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12
 close "P.txt";
 
 #ii
-param sumu {t in H} := sum {i in G} u[i,t].val;
+param U {t in H} := sum {i in G} u[i,t].val;
 print ("NombreUnitats") > "Apartat1_2.txt";
-printf {t in H} "%3i\n", sumu[t] > "Apartat1_2.txt";
+printf {t in H} "%3i\n", U[t] > "Apartat1_2.txt";
 close "Apartat1_2.txt";
 
 #iii

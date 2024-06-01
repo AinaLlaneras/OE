@@ -13,14 +13,18 @@ pg <- read.table("Apartat1_5_PG.txt", header = TRUE)
 th <- read.table("Apartat1_5_TH.txt", header = TRUE)
 u <- read.table("Apartat1_5_u.txt", header = TRUE)
 
-colnames(P)
-nodeinici <- as.factor(c(1,1,2,2,2,3,4,4,4,5,6,6,6,7,7,9,9,10,12,13))
-P1<- rbind(nodeinici, P)
-th
+arcs <- c("()", "(1,5)", "(2,3)", "(2,4)", "(2,5)", "(3,4)", "(4,5)", "(4,7)", "(4,9)", "(5,6)", "(6,11)", "(6,12)", "(6,13)", "(7,8)", "(7,9)", "(9,10)", "(9,14)", "(10,11)", "(12,13)", "(13,14)")
+colnames(P) <- arcs
 
 ## b) unitats necesaries per satisfer la demanda dels nodes a cada periode de temps 
 
 df2 <- read.table("Apartat1_2.txt", header=T)
+colnames(df2) <- "nUnitats"
+df2$T <- 1:24
+ggplot(data = df2) +
+  geom_line(aes(x = T, y = nUnitats, color = "pink"), linewidth=1.5) +
+  labs(title = "Unitats enceses cada hora", x = "T", y = "Unitats") +
+  theme(legend.position = "none",plot.title = element_text(hjust = 0.5))
 
 ## c) gràfic del perfil de potència i energia de dues unitats generadores al llarg del temps
 T <- 1:24
@@ -79,7 +83,7 @@ ggplot(data = arc) +
 marges <- read.table("Apartat_42.txt", header = TRUE)
 U <- marges$rup
 D <- marges$rdown
-
+M <- marges
 # marges de generadors oberts
 pg2 <- pg[,-which(sapply(pg, sum)==0)]
 pg2$T <- T
@@ -123,12 +127,17 @@ ggplot(data = prova2, aes(x = T, y = mgw)) +
   
 # ara ho fem per a tots els generadors: capcitat del sistema
 total <- prova %>% group_by(T) %>% summarise(potencia = sum(mgw))
-total$up <- total$potencia + colSums(t(u)*U) # generadors oberts * rampa up
-total$down <- total$potencia - colSums(t(u)*D) # generadors oberts * rampa down
+up_total <- sum(U)
+down_total <- sum(D)
+
+total$up <- total$potencia + up_total#colSums(t(u)*U) # generadors oberts * rampa up
+total$down <- total$potencia - down_total#colSums(t(u)*D) # generadors oberts * rampa down
+pmax_total <- sum(M$pmax) # suma dels maxims
+pmin_total <- min(M$pmin) # minim dels minims
+
 total[total$down<pmin_total,"down"] <- pmin_total
 
-pmax_total <- sum(marges$pmax) # suma dels maxims
-pmin_total <- min(marges$pmin) # minim  
+ 
 m <- c(pmax_total, pmin_total)
 
 ggplot(data = total, aes(x = T, y = potencia)) + 
@@ -140,5 +149,7 @@ ggplot(data = total, aes(x = T, y = potencia)) +
   theme(plot.title = element_text(hjust = 0.5))
 
 ## f) creus que pot tenir setnit incrementar la capacitat d'alguna unitat generadora? si es així, quina inversió econòmica estaries disposat a fer? 
+
+# L unic generador que es veu limitat per la capacitat és el ROB2. La resta sempre estan per sota el màxim. 
 
 

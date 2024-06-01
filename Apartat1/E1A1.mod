@@ -1,12 +1,12 @@
-## parametres
+## Parametres
 param nB; # num busos
 param refB; # bus referencia
+
 set B := 1..nB; # busos
 set G; # generadors
 set D; # unitats de càrrega	
 set H; # hores 
-set L within B cross B; #arcs 
-
+set L within B cross B; # arcs 
 set GB{B}; # generadors a cada bus 
 set DB{B}; # unitats de carrega a cada bus 
 set H0= 0..card(H);
@@ -22,23 +22,23 @@ param ru{G}; # limit superior de rampa
 param pg0{G}; # p inicial
 param u0{G}; # u inicial 
 param pd{D,H}; # demanda de cada unitat de càrrega
-param sb; #potència base
+param sb; # potència base
 param x{L}; # reactància de la línia 
 param smax{L}; #capacitat de la línia
  
 
-## variables
+## Variables
 var PG {G, H0}; # generacio de potencia de cada generador i 
 var P {L, H}; # p
-var Th { B, H }; # angle de voltatge del bus k 
-var u { G, H0}  binary; # estat del generador i (1=ences, 0=apagat) 
-var vud { G, H} >=0; # cost d'encesa (>=0)
+var Th {B, H }; # angle de voltatge del bus k 
+var u {G, H0}  binary; # estat del generador i (1=ences, 0=apagat) 
+var vud {G, H} >=0; # cost d'encesa (>=0)
 
-## funcio objectiu
+## Funcio objectiu: minimitzem costos
 minimize CostTotal : sum{ i in G, t in H } 
-( cq[i]*PG[i,t]^2+cl[i]*PG[i,t]+cb[i]*u[i,t] + vud[i,t]);
+	(cq[i]*PG[i,t]^2+cl[i]*PG[i,t]+cb[i]*u[i,t] + vud[i,t]);
 
-## restriccions 
+## Restriccions 
 # Nodal Power Flow Equations
 s.t. NPFE { k in B, t in H } :
 	sum{(k,l) in L} P[k,l,t] - sum{(l,k) in L} P[l,k,t] = 
@@ -49,8 +49,8 @@ subject to LPFE {(k,l) in L, t in H } :
 	P[k,l,t] = sb*( Th[k,t]- Th[l,t] ) / x[k,l];
 	
 # Generation limits 
-s.t. GLmin {i in G, t in H} : PG[i,t] >= pgmin[i]*u[i,t] ;
-s.t. GLmax {i in G, t in H} : PG[i,t] <= pgmax[i]*u[i,t];
+s.t. GLmin {i in G, t in H}: PG[i,t] >= pgmin[i]*u[i,t] ;
+s.t. GLmax {i in G, t in H}: PG[i,t] <= pgmax[i]*u[i,t];
 
 # Line Security 
 s.t. LSmin {(k,l) in L, t in H}: P[k,l,t] >= -smax[k,l];
