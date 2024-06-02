@@ -1,0 +1,84 @@
+#i
+param P12{t in H} := P[1,2,t].val;
+param P15{t in H} := P[1,5,t].val;
+
+param P23{t in H} := P[2,3,t].val;
+param P24{t in H} := P[2,4,t].val;
+param P25{t in H} := P[2,5,t].val;
+
+param P34{t in H} := P[3,4,t].val;
+
+param P45{t in H} := P[4,5,t].val;
+param P47{t in H} := P[4,7,t].val;
+param P49{t in H} := P[4,9,t].val;
+
+param P56{t in H} := P[5,6,t].val;
+
+param P611{t in H} := P[6,11,t].val;
+param P612{t in H} := P[6,12,t].val;
+param P613{t in H} := P[6,13,t].val;
+
+param P78{t in H} := P[7,8,t].val;
+param P79{t in H} := P[7,9,t].val;
+
+param P910{t in H} := P[9,10,t].val;
+param P914{t in H} := P[9,14,t].val;
+
+param P1011{t in H} := P[10,11,t].val;
+
+param P1213{t in H} := P[12,13,t].val;
+
+param P1314{t in H} := P[13,14,t].val;
+
+print ("P12 P15 P23 P24 P25 P34 P45 P47 P49 P56 P611 P612 P613 P78 P79 P910 P914 P1011 P1213 P1314") > "P3.txt";
+printf {t in H} "%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f%12.2f\n", P12[t], P15[t], P23[t], P24[t], P25[t], P34[t], P45[t], P47[t], P49[t], P56[t], P611[t], P612[t], P613[t], P78[t], P79[t], P910[t], P914[t], P1011[t], P1213[t], P1314[t] > "P3.txt";
+close "P3.txt";
+
+print("ALL1 NRC1 NRC2 NRC3 ROB1 ROB2 SBO1 SBO2") > "Apartat3_1_w.txt";
+printf {t in H} "%3i%3i%3i%3i%3i%3i%3i%3i\n", w["ALL1",t], w["NRC1",t], w["NRC2",t], w["NRC3",t], w["ROB1",t], w["ROB2",t], w["SBO1",t], w["SBO2",t] > "Apartat3_1_w.txt";
+close "Apartat3_1_w.txt";
+
+print("ALL1 NRC1 NRC2 NRC3 ROB1 ROB2 SBO1 SBO2") > "Apartat3_1_v.txt";
+printf {t in H} "%3i%3i%3i%3i%3i%3i%3i%3i\n", v["ALL1",t], v["NRC1",t], v["NRC2",t], v["NRC3",t], v["ROB1",t], v["ROB2",t], v["SBO1",t], v["SBO2",t] > "Apartat3_1_v.txt";
+close "Apartat3_1_v.txt";
+
+print("D03 D04 D05 D08 D09 D10 D11 D12 D13 D14") > "Apartat3_1_alpha.txt";
+printf {t in H} "%3.4f%3.4f%3.4f%3.4f%3.4f%3.4f%3.4f%3.4f%3.4f%3.4f\n", alpha["D03",t], alpha["D04",t], alpha["D05",t], alpha["D08",t], alpha["D09",t], alpha["D10",t], alpha["D11",t], alpha["D12",t], alpha["D13",t], alpha["D14",t] > "Apartat3_1_alpha.txt";
+close "Apartat3_1_alpha.txt";
+
+#ii
+param sumu {t in H} := sum {i in G} u[i,t].val;
+print ("NombreUnitats") > "Apartat3_2.txt";
+printf {t in H} "%3i\n", sumu[t] > "Apartat3_2.txt";
+close "Apartat3_2.txt";
+
+#iii
+param P_G_NRC1 {t in H} := PG["NRC1",t].val;
+param P_G_NRC3 {t in H} := PG["NRC3",t].val;
+
+print ("PG_NRC3 PG_NRC1") > "Apartat3_3.txt";
+printf {t in H} "%12.2f%12.2f\n", P_G_NRC3[t], P_G_NRC1[t] > "Apartat3_3.txt";
+close "Apartat3_3.txt";
+
+#iv
+# hem pres com a definicio de sobrecarrega l'arc pel que hi passa mes potencia, llavors fem la suma de potencies que passa per cada arc independentment del sentit
+print("pmax pmin rup rdown") > "Apartat3_42.txt";
+printf {i in G} "%12.2f%4i%4i%4i\n", pgmax[i], pgmin[i], ru[i], rd[i] > "Apartat3_42.txt";
+close "Apartat3_42.txt";
+
+#v
+print("pgmax pgmin ru rd") > "Apartat3_5_params.txt";
+printf {i in G} "%12.2f%12.2f%12.2f%12.f\n", pgmax[i], pgmin[i], ru[i], rd[i] > "Apartat3_5_params.txt";
+close "Apartat3_5_params.txt";
+
+print("ALL1 NRC1 NRC2 NRC3 ROB1 ROB2 SBO1 SBO2") > "Apartat3_5_PG.txt";
+printf {t in H} "%5i%5i%5i%5i%5i%5i%5i%5i\n", PG["ALL1",t], PG["NRC1",t], PG["NRC2",t], PG["NRC3",t], PG["ROB1",t], PG["ROB2",t], PG["SBO1",t], PG["SBO2",t] > "Apartat3_5_PG.txt";
+close "Apartat3_5_PG.txt";
+
+print("1 2 3 4 5 6 7 8 9 10 11 12 13 14") > "Apartat3_5_TH.txt";
+printf {t in H} "%12.4f%12.4f%12.4f%12.4f%12.4f%12.4f%12.4f%12.4f%12.4f%12.4f%12.4f%12.4f%12.4f%12.4f\n", Th[1,t], Th[2,t], Th[3,t], Th[4,t], Th[5,t], Th[6,t], Th[7,t], Th[8,t], Th[9,t], Th[10,t], Th[11,t], Th[12,t], Th[13,t], Th[14,t] > "Apartat3_5_TH.txt";
+close "Apartat3_5_TH.txt";
+
+print("ALL1 NRC1 NRC2 NRC3 ROB1 ROB2 SBO1 SBO2") > "Apartat3_5_u.txt";
+printf {t in H} "%5i%5i%5i%5i%5i%5i%5i%5i\n", u["ALL1",t], u["NRC1",t], u["NRC2",t], u["NRC3",t], u["ROB1",t], u["ROB2",t], u["SBO1",t], u["SBO2",t] > "Apartat3_5_u.txt";
+close "Apartat3_5_u.txt";

@@ -1,6 +1,6 @@
 reset;
 
-model Apartat3.mod;
+model E1A31.mod;
 data  data.dat;
 option solver gurobi;
 

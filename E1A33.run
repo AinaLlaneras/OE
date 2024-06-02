@@ -5,7 +5,7 @@ data  data.dat;
 option solver cbc;
 
 solve;
-
+display CostTotal;
 display PG;
 display P;
 display u;
