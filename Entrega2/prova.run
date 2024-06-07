@@ -1,0 +1,13 @@
+reset;
+model prova.mod;
+data prova.dat;
+option solver cplex;
+
+solve;
+
+# Continuous associated problem
+# --------------------------------------------------------------------------
+
+# TO DO: Fix optimal binary variables to get a LP and solve the problem again
+# Hem de resoldre el problema, passar les variables binaries a fixes i tornarlo a resoldre
+solve;
