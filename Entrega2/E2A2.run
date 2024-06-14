@@ -1,6 +1,6 @@
 reset;
-model 2.mod;
-data 2.dat;
+model E2A2.mod;
+data E2A2.dat;
 option solver cplex;
 
 solve;

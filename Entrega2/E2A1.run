@@ -1,6 +1,6 @@
 reset;
-model prova.mod;
-data prova.dat;
+model E2A1.mod;
+data E2A1.dat;
 option solver cplex;
 
 solve;
