@@ -3,7 +3,7 @@ set D := D1 D2 D3;			# unitats de càrrega
 set T := 1 2 3 4 5;
 set B := 1 2 3 4;
 
-set bG := b1 b2;			# blocs de les funcions d'oferta
+set bG := b1 b2;				# blocs de les funcions d'oferta
 set bD := b1 b2 b3;			# blocs de les funcions de demanda
 
 set GB[1] := G1 G2;

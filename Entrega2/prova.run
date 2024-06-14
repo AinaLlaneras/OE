@@ -24,31 +24,20 @@ display P;
 ## Subapartat 4
 # Excedent del productor 
 
-display {i in G, b in bG, t in T, j in 1..2} (
-	lbG[i,b,t],
-	pbG[i,b,t],
-	PG[i,b,t].val,
-	NME[j,t].dual,
-	lbG[i,b,t] - NME[j,t].dual, #lambda a la que s oferta el preu de la electriccitat
-	PG[i,b,t].val*(lbG[i,b,t] - NME[j,t].dual)
+display {i in G, b in bG, t in T} (
+	PG[i,b,t].val*(lbG[i,b,t] - NME[1,t].dual),
+	PG[i,b,t].val*(lbG[i,b,t] - NME[2,t].dual)
 );
 
 # Excedent del consumidor 
-display {i in D, b in bD, t in T, j in 1..2} (
-	lbD[i,b,t],
-	pbD[i,b,t],
-	PD[i,b,t].val,
-	NME[j,t].dual,
-	lbD[i,b,t] - NME[j,t].dual, #lambda a la que s oferta el preu de la electriccitat
-	PD[i,b,t].val*(lbD[i,b,t] - NME[j,t].dual)
+display {i in D, b in bD, t in T} (
+	PD[i,b,t].val*(lbD[i,b,t] - NME[1,t].dual),
+	PD[i,b,t].val*(lbD[i,b,t] - NME[2,t].dual),
+	PD[i,b,t].val*(lbD[i,b,t] - NME[3,t].dual)
 );
 
 # Excedent del comerciant 
 
 display {(k,l) in L, t in T} (
-	P[k,l,t], 
-	NME[k,t].dual, 
-	NME[l,t].dual,
-	NME[l,t].dual - NME[k,t].dual,
 	(NME[l,t].dual - NME[k,t].dual)*P[k,l,t]
 );
