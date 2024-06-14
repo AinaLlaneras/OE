@@ -29,7 +29,7 @@ rm(list = ls())
 #### 3.3. Cost adicional ####
 
 ## 1. Taules de les variables de decisció 
-# CostTotal = 999243
+# CostTotal = 999376
 
 ## Hem ajustat el valor màxim d'alpha a 0.09 perquè sinó donava problema infactible 
 
@@ -43,6 +43,7 @@ v <- read.table("Apartat3_1_v.txt", header = TRUE)
 w <- read.table("Apartat3_1_w.txt", header = TRUE)
 arcs <- c("(1,2)", "(1,5)", "(2,3)", "(2,4)", "(2,5)", "(3,4)", "(4,5)", "(4,7)", "(4,9)", "(5,6)", "(6,11)", "(6,12)", "(6,13)", "(7,8)", "(7,9)", "(9,10)", "(9,14)", "(10,11)", "(12,13)", "(13,14)")
 colnames(P) <- arcs
+colnames(th) <- paste("Th", 1:14, sep="")
 
 ## b) unitats necesaries per satisfer la demanda dels nodes a cada periode de temps 
 
@@ -66,7 +67,7 @@ ggplot(data = df32) +
   geom_rect(aes(xmin = Tprev, xmax = T, ymin = 0, ymax = Potencia, fill = Generadors, color = Generadors), 
             alpha = 0.7) +
   geom_line(aes(x = (T-0.5), y = Potencia, color = factor(Generadors)), linewidth = 1.1) +
-  labs(title = "Perfil de potència de dels generadors NRC1 i NRC3", x = "T", y = "MGW") +
+  labs(title = "Perfil de potència i energia dels generadors NRC1 i NRC3", x = "T", y = "MW") +
   theme(plot.title = element_text(hjust = 0.5))
 
 ## d) quin és l'arc més sobrecarregat? gràfic del seu perfil de potència al llarg del temps 
@@ -81,7 +82,7 @@ arc$Tprev <- T-1
 ggplot(data = arc) + 
   geom_rect(aes(xmin = Tprev, xmax = T, ymin = 0, ymax = potencia, color = "black")) +
   geom_line(aes(x = T-0.5, y = potencia))+
-  labs(title = "Perfil de potència arc (4,7)", x = "T", y = "MGW") +
+  labs(title = "Perfil de potència arc (4,7)", x = "T", y = "MW") +
   theme(legend.position = "none", plot.title = element_text(hjust = 0.5))
 
 ## e) marge de potència disponible té el sistema a cada període per absorbir eventuals desajustos d oferta i o demanda
@@ -124,7 +125,7 @@ ggplot(data = prova2, aes(x = T, y = mgw)) +
   geom_ribbon(aes(ymin = rdown, ymax = rup), fill = "tomato", alpha = 0.5) +
   geom_line() +
   facet_wrap(~generador, ncol = ) +
-  labs(title = "Marge de potència de cada generador", x="T", y="MGW")+
+  labs(title = "Marge de potència de cada generador", x="T", y="MW")+
   geom_hline(data = marges, aes(yintercept = pmax), color = "red", linetype = "dashed") +
   geom_hline(data = marges, aes(yintercept = pmin), color = "blue", linetype = "dashed") +
   theme(plot.title = element_text(hjust = 0.5))
@@ -148,7 +149,7 @@ m <- c(pmax_total, pmin_total)
 ggplot(data = total, aes(x = T, y = potencia)) + 
   geom_ribbon(aes(ymin = down, ymax = up), fill = "tomato", alpha = 0.5) +
   geom_line() +
-  labs(title = "Marge de potència del sistema", x="T", y="MGW")+
+  labs(title = "Marge de potència del sistema", x="T", y="MW")+
   geom_hline(aes(yintercept = pmax_total), color = "red", linetype = "dashed") +
   geom_hline(aes(yintercept = pmin_total), color = "blue", linetype = "dashed") +
   theme(plot.title = element_text(hjust = 0.5))
