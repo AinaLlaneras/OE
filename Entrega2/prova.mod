@@ -59,7 +59,7 @@ s.t. LPF {(k,l) in L, t in T}:
 	P[k,l,t] = sb*(theta[k,t] - theta[l,t])/x[k,l];
 	
 # Theta reference
-s.t. RefB {t in T} : theta[1,t]=0.0;
+s.t. RefB {t in T} : theta[1,t] = 0.0;
 
 # Ramp limits
 s.t. ramp_down {i in G, t in T}:  PG_total[i,t]-PG_total[i, (t-1)] >= -rd[i];

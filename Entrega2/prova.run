@@ -4,10 +4,51 @@ data prova.dat;
 option solver cplex;
 
 solve;
-
-# Continuous associated problem
-# --------------------------------------------------------------------------
-
-# TO DO: Fix optimal binary variables to get a LP and solve the problem again
-# Hem de resoldre el problema, passar les variables binaries a fixes i tornarlo a resoldre
+# doble solve perquè es fixin les variabels binàries 
 solve;
+
+param Energy := sum{i in G, t in (T union {0})} PG_total[i,t].val;
+display SW, Energy ;
+
+## Subapartat 1 
+# preus nodals, energia negociada a cada bus i període de temps
+
+display {k in B, t in T} NME[k,t].dual;
+
+display {i in G, b in bG, t in T} (lbG[i,b,t], pbG[i,b,t], PG[i,b,t].val);
+display {i in D, b in bD, t in T} (lbD[i,b,t], pbD[i,b,t], PD[i,b,t].val);
+
+## Subapartat 3 
+display P;
+
+## Subapartat 4
+# Excedent del productor 
+
+display {i in G, b in bG, t in T, j in 1..2} (
+	lbG[i,b,t],
+	pbG[i,b,t],
+	PG[i,b,t].val,
+	NME[j,t].dual,
+	lbG[i,b,t] - NME[j,t].dual, #lambda a la que s oferta el preu de la electriccitat
+	PG[i,b,t].val*(lbG[i,b,t] - NME[j,t].dual)
+);
+
+# Excedent del consumidor 
+display {i in D, b in bD, t in T, j in 1..2} (
+	lbD[i,b,t],
+	pbD[i,b,t],
+	PD[i,b,t].val,
+	NME[j,t].dual,
+	lbD[i,b,t] - NME[j,t].dual, #lambda a la que s oferta el preu de la electriccitat
+	PD[i,b,t].val*(lbD[i,b,t] - NME[j,t].dual)
+);
+
+# Excedent del comerciant 
+
+display {(k,l) in L, t in T} (
+	P[k,l,t], 
+	NME[k,t].dual, 
+	NME[l,t].dual,
+	NME[l,t].dual - NME[k,t].dual,
+	(NME[l,t].dual - NME[k,t].dual)*P[k,l,t]
+);
